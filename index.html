@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="hi.css">
+<body background="https://graphicdesignjunction.com/wp-content/uploads/2014/05/001+background+pattern+designs.jpg">
+   <!--add icon library-->
+<button class="btn"><a href="E:\harshak\desktop\website page\m\m.html"><i class="fa fa-home" aria-hidden="true"></i>home</button></a></button>
+<div class="do">harshak the maker</div><br><br>
+<div class="hi">how to make a bluetooth car using arduino
+</div><br>
+<div class="yo"><b>hello guys today i have made a bluetooth car using arduino and hc-05 bluetooth module</b></div> <br>
+<div class="yo"><b>the materials used to make this project are:-
+</b></div><br>
+<table bgcolor="white" border="1">
+    <tr>
+        <th>component name</th>
+        <th>quantity</th>
+        <th>price</th>
+    </tr>
+    <tr>
+        <td><a href="https://www.sunelectronics.co.in/Arduino/Arduino-Uno-R3%20and%20Cable-for-Arduino-Uno">arduino uno</a></td>
+        <td>01</td>
+        <td>₹480</td>
+    </tr>
+    <tr>
+        <td><a href="https://zbotic.in/product/hc-06-4pin-bluetooth-module/?utm_source=Google%20Shopping&utm_campaign=Google%20Shopping%202&utm_medium=cpc&utm_term=3745&gclid=Cj0KCQjwma6TBhDIARIsAOKuANzt0-1IVSkEDxtn4bGlVSdnvS9OEpcZZrnFdxfd-BpLEAjHsQ-WxJcaAi1vEALw_wcB">hc-05 bluetooth module</a></td>
+        <td>01</td>
+        <td>₹179</td>
+    </tr>
+    <tr>
+        <td><a href="https://www.robotrack.co.in/index.php?route=product/product&product_id=242&search=L298N+2A+Motor+Driver+Module+with+PWM+Control&description=true&gclid=Cj0KCQjwma6TBhDIARIsAOKuANzTjzQO7rLeEen7MZeVtmT72kOsIK4s5RF1V_2Es3hqBOd9ReW2G10aAh1nEALw_wcB">l298n motor driver</a></td>
+        <td>01</td>
+        <td>₹103</td>
+    </tr>
+    <tr>
+        <td><a href="https://quartzcomponents.com/products/18650-li-ion-2000mah-rechargeable-battery?variant=38001341497528&currency=INR&utm_medium=product_sync&utm_source=google&utm_content=sag_organic&utm_campaign=sag_organic&utm_campaign=gs-2020-12-29&utm_source=google&utm_medium=smart_campaign&gclid=Cj0KCQjwma6TBhDIARIsAOKuANw8ZiPVVRDptvbYAnNSHnwBo_5s1WtJAyEpc2lVPCagi-r0daEnNz8aAu7IEALw_wcB">lithium ion battery</a></td>
+        <td>02</td>
+        <td>₹116</td>
+    </tr>
+<tr>
+    <td><a href="https://www.flipkart.com/aktronics-dc-gearbox-motor-tt-tire-wheel-3-6v-caster-smart-car-chassis-arduino-educational-electronic-hobby-kit/p/itm929635eb6ebd0?pid=EHKG3GESFNWFG6YC&lid=LSTEHKG3GESFNWFG6YCTYCL6W&marketplace=FLIPKART&cmpid=content_electronic-hobby-kit_8965229628_gmc">gear motor with wheels</a></td>
+    <td>02</td>
+    <td>₹319</td>
+</tr>
+</table><br><br>
+<div class="yo"><b>so after you have the components you may do the wiring of the car the diagram is given below</b></div><br><br>
+    <p align="center"><img src="E:\harshak\pictures\Screenshots\Screenshot (44).png" height="377" width="600"><br><br>
+        <div class="yo"><b>so after you complete the wiring you may upload the code in the arduino but remember to disconnect the tx and rx pin of the bluetooth module you may just copy paste the given code here:-</b></div><br><br>
+        <pre>
+     <font color="#5e6d03">#define</font> <font color="#000000">in1</font> <font color="#000000">5</font> <font color="#434f54">&#47;&#47;L298n Motor Driver pins.</font>
+            <font color="#5e6d03">#define</font> <font color="#000000">in2</font> <font color="#000000">6</font>
+        <font color="#5e6d03">#define</font> <font color="#000000">in3</font> <font color="#000000">10</font>
+     <font color="#5e6d03">#define</font> <font color="#000000">in4</font> <font color="#000000">11</font>
+        <font color="#5e6d03">#define</font> <font color="#000000">LED</font> <font color="#000000">13</font>
+     <font color="#00979c">int</font> <font color="#000000">command</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47;Int to store app command state.</font>
+            <font color="#00979c">int</font> <font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">204</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; 0 - 255.</font>
+          <font color="#00979c">int</font> <font color="#000000">Speedsec</font><font color="#000000">;</font>
+       <font color="#00979c">int</font> <font color="#000000">buttonState</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+          <font color="#00979c">int</font> <font color="#000000">lastButtonState</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+     <font color="#00979c">int</font> <font color="#000000">Turnradius</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47;Set the radius of a turn, 0 - 255 Note:the robot will malfunction if this is higher than int Speed.</font>
+            <font color="#00979c">int</font> <font color="#000000">brakeTime</font> <font color="#434f54">=</font> <font color="#000000">45</font><font color="#000000">;</font>
+      <font color="#00979c">int</font> <font color="#000000">brkonoff</font> <font color="#434f54">=</font> <font color="#000000">1</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47;1 for the electronic braking system, 0 for normal.</font>
+     <font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">in1</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">in2</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">in3</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">in4</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">LED</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47;Set the LED pin.</font>
+             &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47;Set the baud rate to your Bluetooth module.</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">available</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">&gt;</font> <font color="#000000">0</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">command</font> <font color="#434f54">=</font> <b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">read</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">Stop</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47;Initialize with motors stoped.</font>
+             &nbsp;&nbsp;&nbsp;<font color="#5e6d03">switch</font> <font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;F&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">forward</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;B&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">back</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;L&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">left</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;R&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">right</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;G&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">forwardleft</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;I&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">forwardright</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;H&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">backleft</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;J&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">backright</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;0&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">100</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;1&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">140</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;2&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">153</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;3&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">165</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;4&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">178</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;5&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">191</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;6&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">204</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;7&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">216</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;8&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">229</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;9&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">242</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">case</font> <font color="#00979c">&#39;q&#39;</font><font color="#434f54">:</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Speed</font> <font color="#434f54">=</font> <font color="#000000">255</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">break</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">Speedsec</font> <font color="#434f54">=</font> <font color="#000000">Turnradius</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">brkonoff</font> <font color="#434f54">==</font> <font color="#000000">1</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">brakeOn</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">}</font> <font color="#5e6d03">else</font> <font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">brakeOff</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+             &nbsp;<font color="#000000">}</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#000000">forward</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in1</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in3</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#000000">back</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in2</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in4</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#000000">left</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in3</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in2</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#000000">right</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in4</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in1</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            <font color="#00979c">void</font> <font color="#000000">forwardleft</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in1</font><font color="#434f54">,</font> <font color="#000000">Speedsec</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in3</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            <font color="#00979c">void</font> <font color="#000000">forwardright</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in1</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in3</font><font color="#434f54">,</font> <font color="#000000">Speedsec</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            <font color="#00979c">void</font> <font color="#000000">backright</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in2</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in4</font><font color="#434f54">,</font> <font color="#000000">Speedsec</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            <font color="#00979c">void</font> <font color="#000000">backleft</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in2</font><font color="#434f54">,</font> <font color="#000000">Speedsec</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in4</font><font color="#434f54">,</font> <font color="#000000">Speed</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#000000">Stop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in1</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in2</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in3</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">in4</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font>
+            <font color="#000000">}</font>
+            
+            <font color="#00979c">void</font> <font color="#000000">brakeOn</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;<font color="#434f54">&#47;&#47;Here&#39;s the future use: an electronic braking system!</font>
+             &nbsp;<font color="#434f54">&#47;&#47; read the pushbutton input pin:</font>
+             &nbsp;<font color="#000000">buttonState</font> <font color="#434f54">=</font> <font color="#000000">command</font><font color="#000000">;</font>
+             &nbsp;<font color="#434f54">&#47;&#47; compare the buttonState to its previous state</font>
+             &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">buttonState</font> <font color="#434f54">!=</font> <font color="#000000">lastButtonState</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; if the state has changed, increment the counter</font>
+             &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">buttonState</font> <font color="#434f54">==</font> <font color="#00979c">&#39;S&#39;</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">lastButtonState</font> <font color="#434f54">!=</font> <font color="#000000">buttonState</font><font color="#000000">)</font> <font color="#000000">{</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">in1</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">in2</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">in3</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">in4</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">brakeTime</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">Stop</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+             &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; save the current state as the last state,</font>
+             &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47;for next time through the loop</font>
+             &nbsp;&nbsp;&nbsp;<font color="#000000">lastButtonState</font> <font color="#434f54">=</font> <font color="#000000">buttonState</font><font color="#000000">;</font>
+             &nbsp;<font color="#000000">}</font>
+            <font color="#000000">}</font>
+            <font color="#00979c">void</font> <font color="#000000">brakeOff</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+            
+            <font color="#000000">}</font>
+            
+            </pre> 
+    <div class="yo"><b>so after you upload the program you are ready to use the car<br>
+    this way we made our bluetooth car using arduino and hc-05 bluetooth module</b></div><br><br>
+ <div class="d"><b>thank you</b></div> <br><br>
+ <p align="center"><a href="https://www.youtube.com/channel/UCkdZZAKXrLijL6Cjfq6j4Ww"><img src="E:\harshak\pictures\Screenshots\harshk.png" height="377" width="600"></a></p>
+</body>
+</html>

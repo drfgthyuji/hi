@@ -1,0 +1,43 @@
+
+.do{
+    text-align: center;
+    font-family: Gill Sans;
+    font-size: 50px;
+}
+.btn{
+    background-color: blue;
+    padding: 12px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 25px;
+    border-top: 17px;
+    border-bottom: 30px;
+}
+.btn:hover{
+background-color: aqua;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    color: rgb(255, 0, 0);
+    background-color: aqua;
+}
+.hi{
+    text-decoration: underline;
+    font-size: 33px;
+    color: rgb(0, 0, 0);
+}
+.yo{
+    font-family:Felix Titling ;
+}
+pre{
+    background-color: aliceblue;
+    overflow: clip;
+}
+.d{
+    font-family: elephant;
+    text-align: center;
+}
